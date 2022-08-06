@@ -18,8 +18,8 @@ def test():
     print('aaaa')
     return "Hello"
 
-@app.route('/get_image',methods = ['POST'])
-def return_image():
+@app.route('/upload_image',methods = ['GET','POST'])
+def upload_image():
     # 画像をとってくる
     if request.files['image']:
         filename = request.files['image'].filename
