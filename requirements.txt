@@ -5,6 +5,7 @@ Cython==0.29.32
 fashionpedia==1.1
 Flask==2.2.1
 fonttools==4.34.4
+gunicorn==20.1.0
 imageio==2.21.0
 importlib-metadata==4.12.0
 itsdangerous==2.1.2
