@@ -22,13 +22,19 @@ def test():
 def upload_image():
     # 画像をとってくる
     if request.files['image']:
+        # streamはデータの入出力を行うためのやつ
         filename = request.files['image'].filename
         content_type = request.files['image'].content_type
         # 画像として読み込み
         stream = request.files['image'].stream
+        # numpy形式に変換.asarray配列になる
         img_array = np.asarray(bytearray(stream.read()), dtype=np.uint8)
+        # 画像のデコード
         img = cv2.imdecode(img_array, 1)
+        # jpgにデコード
         issuccess,buffer = cv2.imencode('.jpg',img)
+        
+        # バイトをいろいろ
         buf = io.BytesIO(buffer)
         buf.seek(0)
         
