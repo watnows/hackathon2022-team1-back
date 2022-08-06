@@ -7,6 +7,7 @@ from flask import Flask
 app = Flask(__name__)
 img = "../assets/test1.jpg"
 
+
 @app.route('/')
 def test():
     return "Hello"
