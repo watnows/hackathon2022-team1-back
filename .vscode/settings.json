@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/a2ef3df3-8106-4d1c-9600-1ed864983eac/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/fashionmonster",
+    "appService.deploySubpath": "."
+}
