@@ -1,27 +1,22 @@
 # from unicodedata import name
 # from fashionpedia.fp import FashionPedia
-from os import abort
+# from os import abort
 import numpy as np
-import os
+# import os
 from flask import Flask, request ,send_file
 import cv2
 import io
-import firebase_admin
+# import firebase_admin
 from flask_cors import CORS
-from firebase_admin import credentials
-# from firebase_admin import firestore
-from google.cloud import storage
-# import pyrebas\e
+# from firebase_admin import credentials
+# from firebase_admin import storage
 
-# from PIL import Image
-# import inspect
-# from google.cloud import storage
-# from google.cloud import Blob
+# import pyrebase
 
 app = Flask(__name__)
+app.config['DEBUG'] = True
 # img = "../assets/test1.jpg"
 CORS(app)
-
 
 @app.route('/')
 def test():
@@ -33,14 +28,32 @@ def testing():
     return "Hello"
 
 # firebase = pyrebase.initialize_app(config)
- 
-# db = firebase.database()
-# GOOGLE_APPLICATION_CREDENTIALS=os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
-# FIREBASE_STORAGE_BUCKET=os.environ["FIREBASE_STORAGE_BUCKET"]
-
-# cred = credentials.Certificate(GOOGLE_APPLICATION_CREDENTIALS)
-# firebase_admin.initialize_app(cred,{'storageBucket':FIREBASE_STORAGE_BUCKET})
-# bucket = storage.bucket()
+# cred = credentials.Certificate("fashionmonster-b8b0c-firebase-adminsdk-q6k3r-bc0409b1e9.json")
+# default_app=firebase_admin.initialize_app(cred,{'storageBucket': 'fashionmonster-b8b0c.appspot.com'})
+@app.route("/final_recive",methods=['GET','POST'])
+def image():
+    # string
+    filename = request.files['image'].filename
+    # string
+    content_type = request.files['image'].content_type
+    # string
+    stream = request.files['image'].stream
+    # number
+    img_array = np.asarray(bytearray(stream.read()), dtype=np.uint8)
+    try:
+        # np.asarray
+        img = cv2.imdecode(img_array, 1)
+        # tupple
+        # (True, array([255, 216, 255, ..., 127, 255, 217], dtype=uint8))
+        is_success,buffer = cv2.imencode('.jpg',img)
+        
+        buf = io.BytesIO(buffer)
+        buf.seek(0)
+        
+        return buf
+    except Exception as e:
+        print(e)
+        return 'Error'
 
 @app.route('/recive_img',methods=['GET','POST'])
 def recive_image():
@@ -55,16 +68,19 @@ def recive_image():
             img_path = img_dir +".jpg"
             cv2.imwrite(img_path,img)
             
-            # storage_client = storage.Client()
-            # # bucket = storage_client.bucket(FIREBASE_STORAGE_BUCKET)
-            # blob =  bucket.blob(img_path)
+            # bucket = storage.bucket('fashionmonster-b8b0c.appspot.com')
+            # blob = bucket.blob(img_path)
             # blob.upload_from_filename(img_path)
             
-        return 'HEllo'
+            # blob.make_public()
+            # print(blob.public_url)
+            
+            # blob =  bucket.blob(img_path)
+            # blob.upload_from_filename(img_path)
+        return 'HElloaaaa'
     except Exception as e:
         print(e)
-        # abort(e.code)
-    return send_file
+        return 'Error'
 
 
 @app.route('/upload_image',methods = ['GET','POST'])
