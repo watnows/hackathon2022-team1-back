@@ -19,6 +19,7 @@ CORS(app)
 # cred = credentials.Certificate(JSON_PATH)
 # firebase_admin.initialize_app(cred)
 
+
 @app.route('/')
 def test():
     print('aaaa')
