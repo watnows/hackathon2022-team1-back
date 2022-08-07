@@ -8,10 +8,11 @@ from flask_cors import CORS
 
 from firebase_admin import credentials
 from google.cloud import storage
-# from google.cloud.storage import Blob
+
+from img_getcolor import get_imgcolor
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
-# img = "../assets/test1.jpg"
 CORS(app)
 
 JSON_PATH = 'fashionmonster-b8b0c-firebase-adminsdk-q6k3r-bc0409b1e9.json'
@@ -26,17 +27,7 @@ def test():
 @app.route('/testing',methods=['GET','POST'])
 def testing():
     return "Hello"
-# JSON_PATH = 'fashionmonster-b8b0c-firebase-adminsdk-q6k3r-bc0409b1e9.json'
-# cred = credentials.Certificate(JSON_PATH)
-# firebase_admin.initialize_app(cred)
-# db = firestore.client()
-# firebase = pyrebase.initialize_app(config)
-# cred = credentials.Certificate("./fashionmonster-b8b0c-firebase-adminsdk-q6k3r-bc0409b1e9.json")
-# firebase_admin.initialize_app(cred,{
-#     'storageBucket':'fashionmonster-b8b0c.appspot.com'
-# })
-# bucket = storage.bucket('Test')
-# default_app=firebase_admin.initialize_app(cred,{'storageBucket': 'fashionmonster-b8b0c.appspot.com'})
+
 @app.route("/final_recive",methods=['GET','POST'])
 def image():
     # string
@@ -54,15 +45,15 @@ def image():
         # (True, array([255, 216, 255, ..., 127, 255, 217], dtype=uint8))
         is_success,buffer = cv2.imencode('.jpg',img)
         
+        
         buf = io.BytesIO(buffer)
         buf.seek(0)
+        
+        get_imgcolor(img)
         
         return send_file(
             buf,as_attachment=True,download_name=filename)
         
-        # return send_file(
-        #     buf,as_attachment=True,attachment_filename=filename
-        # )
         
     except Exception as e:
         print(e)
