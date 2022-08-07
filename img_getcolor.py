@@ -47,7 +47,7 @@ def get_imgcolor(img):
     h = imgBoxHsv.T[0].flatten().mean()
     s = imgBoxHsv.T[1].flatten().mean()
     v = imgBoxHsv.T[2].flatten().mean()
-     
+    
     
     # HSV平均値を出力
     # uHeは[0,179], Saturationは[0,255]，Valueは[0,255]
