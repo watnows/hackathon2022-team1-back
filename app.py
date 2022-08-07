@@ -15,6 +15,7 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 CORS(app)
 
+
 # JSON_PATH = 'fashionmonster-b8b0c-firebase-adminsdk-q6k3r-bc0409b1e9.json'
 # cred = credentials.Certificate(JSON_PATH)
 # firebase_admin.initialize_app(cred)
