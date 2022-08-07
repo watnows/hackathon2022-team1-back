@@ -5,7 +5,6 @@ import cv2
 import io
 import firebase_admin
 from flask_cors import CORS
-
 from firebase_admin import credentials
 from google.cloud import storage
 
