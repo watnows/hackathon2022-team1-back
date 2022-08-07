@@ -25,7 +25,20 @@ def get_imgcolor(img):
     print("B: %.2f" % (b))
     print("G: %.2f" % (g))
     print("R: %.2f" % (r))
-
+    
+    min_rgb = int(min(b,g,r))
+    max_rgb = int(max(b,g,r))
+    
+    complementary = max_rgb + min_rgb
+    
+    b = complementary - b
+    g = complementary - g
+    r = complementary - r
+    
+    print("B: %.2f" % (b))
+    print("G: %.2f" % (g))
+    print("R: %.2f" % (r))
+    
     # BGRからHSVに変換
     imgBoxHsv = cv2.cvtColor(imgBox,cv2.COLOR_BGR2HSV)
 
@@ -34,9 +47,12 @@ def get_imgcolor(img):
     h = imgBoxHsv.T[0].flatten().mean()
     s = imgBoxHsv.T[1].flatten().mean()
     v = imgBoxHsv.T[2].flatten().mean()
-
+     
+    
     # HSV平均値を出力
     # uHeは[0,179], Saturationは[0,255]，Valueは[0,255]
     print("Hue: %.2f" % (h))
     print("Salute: %.2f" % (s))
     print("Value: %.2f" % (v))
+    
+    return b,g,r

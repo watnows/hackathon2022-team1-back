@@ -10,7 +10,7 @@ from firebase_admin import credentials
 from google.cloud import storage
 
 from img_getcolor import get_imgcolor
-
+import json
 app = Flask(__name__)
 app.config['DEBUG'] = True
 CORS(app)
@@ -48,11 +48,17 @@ def image():
         
         buf = io.BytesIO(buffer)
         buf.seek(0)
+        # 色もらうやつ 
+        b,g,r= get_imgcolor(img)
+        print('test',b)
         
-        get_imgcolor(img)
+        return_rgb = {'r':int(r),'g':int(g),'b':int(b)}
         
-        return send_file(
-            buf,as_attachment=True,download_name=filename)
+        return(
+            return_rgb
+        )
+        # return send_file(
+        #     buf,as_attachment=True,download_name=filename)
         
         
     except Exception as e:
